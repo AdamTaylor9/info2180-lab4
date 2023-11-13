@@ -63,10 +63,42 @@ $superheroes = [
   ], 
 ];
 
+
+$q = $_REQUEST["q"];
+$found = false;
+
 ?>
 
-<ul>
-<?php foreach ($superheroes as $superhero): ?>
-  <li><?= $superhero['alias']; ?></li>
-<?php endforeach; ?>
-</ul>
+<?php if ($q==""): ?>
+
+    <ul>
+        <?php foreach ($superheroes as $superhero): ?>
+            <li><?= $superhero['alias']; ?></li>
+        <?php endforeach; ?>
+    </ul>
+
+<?php else: ?>
+        
+    <?php foreach ($superheroes as $superhero): ?>
+        <?php if ((strtoupper($superhero['name']) == $q) || (strtoupper($superhero['alias']) == $q)): ?>
+            <?php $found=true ?>
+            <div id="searchRes">
+                <h3><?= $superhero['alias']; ?></h3>
+                <h4> A.K.A <?= $superhero['name']; ?></h3>
+                <p><?= $superhero['biography']; ?></p>
+            </div>
+        <?php endif; ?>
+    <?php endforeach; ?>
+
+    <?php if ($found==false): ?>
+        <h3 id="error">SUPERHERO NOT FOUND</h3>
+    <?php endif; ?>
+        
+
+<?php endif; ?>
+
+
+
+
+
+
